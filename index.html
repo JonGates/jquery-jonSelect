@@ -1,0 +1,123 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>jonSelect 联动下拉菜单</title>
+<style>
+</style>
+</head>
+<body>
+<div class="wrap">
+
+	<div id="area1">
+		<p>全数据(总数据量超过3M，APP用这种方式还可以，web用这方式加载就蛋疼了)：<br>
+			<select class="province1" data-first-title="选择省">
+				<option value="">请选择</option>
+				<option value="120000" selected></option>
+			</select>
+			<select class="city1" data-first-title="选择市">
+				<option value="">请选择</option>
+				<option value="120100" selected></option>
+			</select>
+			<select class="region1" data-first-title="选择区县">
+				<option value="">请选择</option>
+				<option value="120103" selected></option>
+			</select>
+			<select class="town1" data-first-title="选择乡镇">
+				<option value="">请选择</option>
+			</select>
+		</p>
+	</div>
+
+	<div id="area2">
+		<p>小数据+API(前2层是远程文件数据，后3层调用API，应没那么多数据调用，所以结构是套用的)：<br>
+			<select class="province2" data-first-title="选择省">
+				<option value="">请选择</option>
+				<option value="350000" selected></option>
+			</select>
+			<select class="city2" data-first-title="选择市">
+				<option value="">请选择</option>
+				<option value="350200" selected></option>
+			</select>
+			<select class="region2" data-first-title="选择区县" data-url="http://xm.597.com/api/web/region.api?id=1" data-json-value="area_id"  data-json-name="area_name">
+				<option value="">请选择</option>
+				<option value="3500" selected></option>
+			</select>
+			<select class="town2" data-first-title="选择乡镇" data-url="http://xm.597.com/api/web/region.api" data-query="id" data-json-value="area_id"  data-json-name="area_name">
+				<option value="">请选择</option>
+				<option value="3502" selected></option>
+			</select>
+			<select class="subtown2" data-first-title="选择乡镇" data-url="http://xm.597.com/api/web/region.api" data-query="id" data-json-value="area_id"  data-json-name="area_name">
+				<option value="">请选择</option>
+				<option value="350203" selected></option>
+			</select>
+		</p>
+	</div>
+
+	<div id="area3">
+		<p>本页数据：<br>
+			<select class="province3" data-first-title="选择类型1">
+				<option value="">请选择</option>
+				<option value="1" selected></option>
+			</select>
+			<select class="city3" data-first-title="选择类型2">
+				<option value="">请选择</option>
+				<option value="11" selected></option>
+			</select>
+			<select class="region3" data-first-title="选择类型3">
+				<option value="">请选择</option>
+				<option value="110" selected></option>
+			</select>
+		</p>
+	</div>
+
+
+</div>
+
+<!--<script src="//cdn.bootcss.com/jquery/1.12.3/jquery.min.js"></script>-->
+<script src="//cdn.bootcss.com/zepto/1.0rc1/zepto.min.js"></script> 
+<script src="js/jquery.jonSelect.js"></script>
+<script>
+(function() {
+
+	//选择url或data数据格式的数据，第一个索引值一定要是0哦
+	var ldata ={"0":{"c":"","p":0,"s":[1,2,3,4]},"1":{"c":"美女","p":0,"s":[11,12]},"11":{"c":"韩国美女","p":1,"s":[110,111]},"12":{"c":"日本女优","p":1},"2":{"c":"丝袜","p":0},"3":{"c":"明星","p":0},"4":{"c":"谐星","p":0},"110":{"c":"女团","p":0},"111":{"c":"女星","p":0}};
+
+
+	var jonSelectApi1;
+	$('#area1').jonSelect({
+		selects: ['province1', 'city1', 'region1' ,'town1'],
+		url:'js/area.json',//调用远程
+		//data: ldata,//使用本页数据
+		//required: true,
+		emptyStyle: 'none'
+	}, function(api) {
+		jonSelectApi1 = api;
+	});
+
+	var jonSelectApi2;
+	$('#area2').jonSelect({
+		selects: ['province2', 'city2', 'region2' ,'town2' ,'subtown2'],
+		url:'js/area.min.json',//调用远程
+		//data: ldata,//使用本页数据
+		//required: true,
+		emptyStyle: 'none'
+	}, function(api) {
+		jonSelectApi2 = api;
+	});
+
+	var jonSelectApi3;
+	$('#area3').jonSelect({
+		selects: ['province3', 'city3', 'region3' ,'town3'],
+		//url:'js/area.min.json',//调用远程
+		data: ldata,//使用本页数据
+		//required: true,
+		emptyStyle: 'none'
+	}, function(api) {
+		jonSelectApi3 = api;
+	});
+
+})();
+</script>
+</body>
+</html>
